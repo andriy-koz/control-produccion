@@ -93,14 +93,45 @@ export default function Objetivos() {
 
   return (
     <main>
+      <div className='overflow-x-auto'>
+        <table className='table px-12'>
+          <thead>
+            <tr>
+              <th>Modelo</th>
+              <th>Pieza</th>
+              <th>Objetivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {objetivos &&
+              objetivos.map((objetivo: any, i: number) => (
+                <tr key={i}>
+                  <td>{objetivo.modelo.toUpperCase()}</td>
+                  <td>{piezaNombre(objetivo.pieza)}</td>
+                  <td>{objetivo.cantidad_objetivo}</td>
+                  <td>
+                    <button
+                      className='btn btn-secondary btn-outline'
+                      onClick={handleDelete(objetivo.id)}>
+                      borrar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+      </div>
       <form
         className='px-12 py-12 bg-base-200 rounded-3xl shadow-md m-12 space-y-6 text-center'
         onSubmit={handleSubmit}>
         <h2 className='text-center text-xl'>Agregar objetivo</h2>
 
-        <div className='space-x-6 py-2'>
-          <label htmlFor='sector'>Sector</label>
+        <div className='py-2'>
+          <label htmlFor='sector' className='block'>
+            Sector
+          </label>
           <input
+            className='w-full max-w-xs'
             type='text'
             name='sector'
             id='sector'
@@ -232,36 +263,6 @@ export default function Objetivos() {
           Guardar
         </button>
       </form>
-      <div className='overflow-x-auto'>
-        <table className='table px-12'>
-          <thead>
-            <tr>
-              <th></th>
-              <th>Modelo</th>
-              <th>Pieza</th>
-              <th>Objetivo</th>
-            </tr>
-          </thead>
-          <tbody>
-            {objetivos &&
-              objetivos.map((objetivo: any, i: number) => (
-                <tr key={i}>
-                  <td>{i + 1}</td>
-                  <td>{objetivo.modelo.toUpperCase()}</td>
-                  <td>{piezaNombre(objetivo.pieza)}</td>
-                  <td>{objetivo.cantidad_objetivo}</td>
-                  <td>
-                    <button
-                      className='btn btn-secondary btn-outline'
-                      onClick={handleDelete(objetivo.id)}>
-                      borrar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </div>
     </main>
   )
 }
