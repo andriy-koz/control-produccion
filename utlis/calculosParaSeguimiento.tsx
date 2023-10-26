@@ -8,7 +8,7 @@ export default function calculosParaSeguimiento(
     minActual: any
 ) {
     let semaforo = 'verde'
-    const {suma, ultima_entrega} = sumarEntregas(
+    const {total_entregas, ultima_entrega} = sumarEntregas(
         entregas,
         objetivo.modelo,
         objetivo.pieza,
@@ -27,7 +27,7 @@ export default function calculosParaSeguimiento(
         objetivo.min_inicio / 60
     const tiempo_por_entrega = objetivo.cantidad_entrega / piezas_hora
     const entregas_objetivo = tiempo_transcurrido / tiempo_por_entrega
-    const entregas_realizadas = suma / objetivo.cantidad_entrega
+    const entregas_realizadas = total_entregas / objetivo.cantidad_entrega
     const piezas_estimadas = piezas_hora * tiempo_transcurrido
 
     if (entregas_objetivo - 0.25 < entregas_realizadas + 1) {
@@ -47,13 +47,13 @@ export default function calculosParaSeguimiento(
             objetivo.min_inicio / 60
     )
 
-    const progreso = (suma / objetivo.cantidad_objetivo) * 100
+    const progreso = (total_entregas / objetivo.cantidad_objetivo) * 100
 
     return {
         progreso,
         estimado_proxima_entrega,
         piezas_estimadas,
-        suma,
+        total_entregas,
         semaforo,
         piezas_hora,
         ultima_entrega

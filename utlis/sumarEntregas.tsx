@@ -24,5 +24,5 @@ export const sumarEntregas = (
             }
         }
     })
-    return { suma: sum, ultima_entrega: hora_ultima_entrega }
+    return { total_entregas: sum, ultima_entrega: hora_ultima_entrega }
 }

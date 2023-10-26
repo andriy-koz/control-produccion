@@ -10,7 +10,7 @@ export default function Seguimiento() {
         <div className="space-y-4">
             {objetivos.map((objetivo: any) => {
             
-            const {progreso, estimado_proxima_entrega, piezas_estimadas, suma, semaforo, piezas_hora, ultima_entrega} = calculosParaSeguimiento(objetivo, entregas, horaActual, minActual)
+            const {progreso, estimado_proxima_entrega, piezas_estimadas, total_entregas, semaforo, piezas_hora, ultima_entrega} = calculosParaSeguimiento(objetivo, entregas, horaActual, minActual)
 
                 return (
                     <div
@@ -28,7 +28,7 @@ export default function Seguimiento() {
                                 <div className="stat">
                                     <div className="stat-title">Entergados</div>
                                     <div className="stat-value">
-                                        {suma}
+                                        {total_entregas}
                                     </div>
                                     <div className="stat-desc">
                                         La última entrega fue a las{' '}
