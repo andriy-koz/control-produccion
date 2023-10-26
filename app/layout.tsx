@@ -46,7 +46,7 @@ export default function RootLayout({
                   <Link href={'/entregas'}>Entregas</Link>
                 </li>
                 <li>
-                  <Link href={'/resumen'}>Resumen</Link>
+                  <Link href={'/seguimiento'}>Seguimiento</Link>
                 </li>
               </ul>
             </div>
@@ -63,7 +63,7 @@ export default function RootLayout({
                 <Link href={'/entregas'}>Entregas</Link>
               </li>
               <li>
-                <Link href={'/resumen'}>Resumen</Link>
+                <Link href={'/seguimiento'}>Seguimiento</Link>
               </li>
             </ul>
           </div>

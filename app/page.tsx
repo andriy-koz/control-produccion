@@ -10,8 +10,8 @@ export default async function Home() {
       <Link href={'/entregas'} className='btn'>
         Entregas
       </Link>
-      <Link href={'/resumen'} className='btn'>
-        Resumen
+      <Link href={'/seguimiento'} className='btn'>
+        Seguimiento
       </Link>
     </main>
   )
