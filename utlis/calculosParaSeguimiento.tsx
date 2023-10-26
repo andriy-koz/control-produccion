@@ -8,7 +8,7 @@ export default function calculosParaSeguimiento(
     minActual: any
 ) {
     let semaforo = 'verde'
-    const {total_entregas, ultima_entrega} = sumarEntregas(
+    const { total_entregas, ultima_entrega } = sumarEntregas(
         entregas,
         objetivo.modelo,
         objetivo.pieza,
@@ -20,21 +20,25 @@ export default function calculosParaSeguimiento(
             objetivo.min_fin / 60 -
             objetivo.hora_inicio -
             objetivo.min_inicio / 60)
+    const piezas_15mins = piezas_hora / 4
     const tiempo_transcurrido =
         horaActual +
         minActual / 60 -
         objetivo.hora_inicio -
         objetivo.min_inicio / 60
     const tiempo_por_entrega = objetivo.cantidad_entrega / piezas_hora
-    const entregas_objetivo = tiempo_transcurrido / tiempo_por_entrega
-    const entregas_realizadas = total_entregas / objetivo.cantidad_entrega
     const piezas_estimadas = piezas_hora * tiempo_transcurrido
 
-    if (entregas_objetivo - 0.25 < entregas_realizadas + 1) {
+    if (
+        piezas_estimadas - total_entregas <=
+        objetivo.cantidad_entrega + piezas_15mins
+    ) {
         semaforo = 'verde'
     } else if (
-        entregas_objetivo - 0.25 > entregas_realizadas + 1 &&
-        entregas_objetivo < entregas_realizadas
+        piezas_estimadas - total_entregas >
+            objetivo.cantidad_entrega + piezas_15mins &&
+        piezas_estimadas - total_entregas <
+            objetivo.cantidad_entrega + piezas_hora
     ) {
         semaforo = 'amarillo'
     } else {
@@ -42,7 +46,8 @@ export default function calculosParaSeguimiento(
     }
 
     const estimado_proxima_entrega = convertirAHorasYMinutos(
-        Math.ceil(entregas_objetivo) * tiempo_por_entrega +
+        Math.ceil(piezas_estimadas / objetivo.cantidad_entrega) *
+            tiempo_por_entrega +
             objetivo.hora_inicio +
             objetivo.min_inicio / 60
     )
@@ -56,6 +61,6 @@ export default function calculosParaSeguimiento(
         total_entregas,
         semaforo,
         piezas_hora,
-        ultima_entrega
+        ultima_entrega,
     }
 }
