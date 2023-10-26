@@ -62,7 +62,7 @@ export default function Entregas() {
     const hs = date.getHours()
 
     const entrega = {
-      cantidad_entrega: e.target.cantidad_entrega.value,
+      cantidad_entrega: parseInt(e.target.cantidad_entrega.value),
       pieza,
       sector: 'soldadura',
       modelo,

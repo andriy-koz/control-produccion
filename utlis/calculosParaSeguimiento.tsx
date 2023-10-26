@@ -7,8 +7,8 @@ export default function calculosParaSeguimiento(
     minActual: any
 ) {
     const sumarEntregas = (modelo: string, pieza: string, id: any) => {
-        let sum = 0
         let hora_ultima_entrega = '00:00'
+        let sum = 0
         let hora = 0
         entregas.forEach((entrega: any) => {
             if (
@@ -16,9 +16,10 @@ export default function calculosParaSeguimiento(
                 entrega.pieza === pieza &&
                 entrega.id_objetivo === id
             ) {
+                console.log(typeof(entrega.cantidad_entrega))
                 sum += parseInt(entrega.cantidad_entrega)
-                if (parseInt(entrega.hora) > hora) {
-                    hora = parseInt(entrega.hora)
+                if (entrega.hora > hora) {
+                    hora = entrega.hora
                     hora_ultima_entrega = convertirAHorasYMinutos(
                         hora + entrega.minuto / 60
                     )
@@ -72,5 +73,12 @@ export default function calculosParaSeguimiento(
 
     const progreso = (entregasSuma.suma / objetivo.cantidad_objetivo) * 100
 
-    return {progreso, estimado_proxima_entrega, piezas_estimadas, entregasSuma, semaforo, piezas_hora}
+    return {
+        progreso,
+        estimado_proxima_entrega,
+        piezas_estimadas,
+        entregasSuma,
+        semaforo,
+        piezas_hora,
+    }
 }
