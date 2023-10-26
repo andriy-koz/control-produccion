@@ -48,12 +48,12 @@ export default function Seguimiento() {
         entrega.id_objetivo === id
       ) {
         sum += parseInt(entrega.cantidad_entrega)
-      }
-      if (hora < entrega.hora) {
-        hora = entrega.hora
-        hora_ultima_entrega = convertirAHorasYMinutos(
-          entrega.hora + entrega.minuto / 60
-        )
+        if (parseInt(entrega.hora) > hora) {
+          hora = parseInt(entrega.hora)
+          hora_ultima_entrega = convertirAHorasYMinutos(
+            hora + entrega.minuto / 60
+          )
+        }
       }
     })
     return { suma: sum, ultima_entrega: hora_ultima_entrega }
@@ -66,7 +66,7 @@ export default function Seguimiento() {
   }
 
   return (
-    <div>
+    <div className='space-y-4'>
       {objetivos.map((objetivo: any) => {
         let semaforo = 'verde'
         const entregas = sumarEntregas(
@@ -88,6 +88,7 @@ export default function Seguimiento() {
         const tiempo_por_entrega = objetivo.cantidad_entrega / piezas_hora
         const entregas_objetivo = tiempo_transcurrido / tiempo_por_entrega
         const entregas_realizadas = entregas.suma / objetivo.cantidad_entrega
+        const piezas_estimadas = piezas_hora * tiempo_transcurrido
 
         if (entregas_objetivo - 0.25 < entregas_realizadas + 1) {
           semaforo = 'verde'
@@ -110,21 +111,54 @@ export default function Seguimiento() {
           .toString()
           .padStart(2, '0')}:${objetivo.min_inicio.toString().padStart(2, '0')}`
 
+        const progreso = (entregas.suma / objetivo.cantidad_objetivo) * 100
+
         return (
-          <div key={objetivo.id}>
-            <h1>{objetivo.modelo}</h1>
-            <p>{objetivo.pieza}</p>
-            <p>{objetivo.cantidad}</p>
-            <p>{entregas.suma}</p>
-            <p>semaforo: {semaforo}</p>
-            <p>piezas por hora: {piezas_hora.toFixed(2)}</p>
-            <p>hora de inicio: {hora_inicio}</p>
-            <p>
-              tiempo transcurrido:{' '}
-              {convertirAHorasYMinutos(tiempo_transcurrido)}
-            </p>
-            <p>estimado para proxima entrega: {estimado_proxima_entrega}</p>
-            <p>ultima entrega: {entregas.ultima_entrega}</p>
+          <div
+            key={objetivo.id}
+            className='flex flex-col justify-center items-center bg-base-200 py-4 gap-2'>
+            <h1 className='uppercase text-secondary text-xl'>
+              {objetivo.modelo}
+              <span className='uppercase ml-1 text-base text-base-content'>
+                {objetivo.pieza}
+              </span>
+            </h1>
+            <div className='flex justify-center items-center text-center'>
+              <div className='stats shadow'>
+                <div className='stat'>
+                  <div className='stat-title'>Entergados</div>
+                  <div className='stat-value'>{entregas.suma}</div>
+                  <div className='stat-desc'>
+                    La última entrega fue a las {entregas.ultima_entrega}
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`radial-progress ${
+                  semaforo === 'verde' ? 'text-success' : ''
+                } ${semaforo === 'amarillo' ? 'text-warning' : ''} ${
+                  semaforo === 'rojo' ? 'text-error' : ''
+                } }`}
+                style={{ '--value': `${progreso}` } as React.CSSProperties}>
+                {Math.round(progreso)}%
+              </div>
+            </div>
+            <div className='stats shadow mx-auto text-center'>
+              <div className='stat'>
+                <div className='stat-title'>Piezas por hora</div>
+                <div className='stat-value'>{piezas_hora.toFixed(2)}</div>
+                <div className='stat-desc'>
+                  Estimado {Math.round(piezas_estimadas)} piezas
+                </div>
+              </div>
+              <div className='stat'>
+                <div className='stat-title'>Objetivo</div>
+                <div className='stat-value'>{objetivo.cantidad_objetivo}</div>
+                <div className='stat-desc'>
+                  Próxima entrega a las {estimado_proxima_entrega}
+                </div>
+              </div>
+            </div>
           </div>
         )
       })}
