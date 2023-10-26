@@ -9,7 +9,6 @@ import { sumarEntregas } from '@/utlis/sumarEntregas'
 
 export default function Entregas() {
     const [entregas, objetivos, horaActual, minActual] = useGetData()
-    const [estadoEntregas, setEstadoEntregas] = useState()
 
     // Manejar las entregas correspondientes a cada objetivo
     const handleEntrega = async (
@@ -17,7 +16,6 @@ export default function Entregas() {
         modelo: any,
         pieza: any,
         id_objetivo: any,
-        total_entregas : any
     ) => {
         e.preventDefault()
 
@@ -39,7 +37,6 @@ export default function Entregas() {
 
         const docRef = doc(database, 'entregas', entrega.id)
         await setDoc(docRef, entrega)
-        setEstadoEntregas(total_entregas)
       }
       
       return (
@@ -62,7 +59,6 @@ export default function Entregas() {
                                     objetivo.modelo,
                                     objetivo.pieza,
                                     objetivo.id,
-                                    total_entregas
                                 )
                             }
                             key={objetivo.id}
