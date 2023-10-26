@@ -11,7 +11,7 @@ import {
   getDocs,
   deleteDoc,
 } from 'firebase/firestore'
-import { database } from '../../firebase'
+import { database } from '@/firebase'
 
 const modelos = ['a4', 'a5', 'a6']
 const piezas = ['fondo-canos', 'tapa-funda', 'terminado']
