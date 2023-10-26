@@ -5,12 +5,24 @@ import calculosParaSeguimiento from '@/utlis/calculosParaSeguimiento'
 
 export default function Seguimiento() {
     const [entregas, objetivos, horaActual, minActual] = useGetData()
-    
+
     return (
         <div className="space-y-4">
             {objetivos.map((objetivo: any) => {
-            
-            const {progreso, estimado_proxima_entrega, piezas_estimadas, total_entregas, semaforo, piezas_hora, ultima_entrega} = calculosParaSeguimiento(objetivo, entregas, horaActual, minActual)
+                const {
+                    progreso,
+                    estimado_proxima_entrega,
+                    piezas_estimadas,
+                    total_entregas,
+                    semaforo,
+                    piezas_hora,
+                    ultima_entrega,
+                } = calculosParaSeguimiento(
+                    objetivo,
+                    entregas,
+                    horaActual,
+                    minActual
+                )
 
                 return (
                     <div
@@ -35,22 +47,26 @@ export default function Seguimiento() {
                                         {ultima_entrega}
                                     </div>
                                 </div>
-                            </div>
-                            <div
-                                className={`ml-2 radial-progress ${
-                                    semaforo === 'verde' ? 'text-success' : ''
-                                } ${
-                                    semaforo === 'amarillo'
-                                        ? 'text-warning'
-                                        : ''
-                                } ${semaforo === 'rojo' ? 'text-error' : ''} }`}
-                                style={
-                                    {
-                                        '--value': `${progreso}`,
-                                    } as React.CSSProperties
-                                }
-                            >
-                                {Math.round(progreso)}%
+                                <div
+                                    className={`mt-4 mr-2 radial-progress ${
+                                        semaforo === 'verde'
+                                            ? 'text-success'
+                                            : ''
+                                    } ${
+                                        semaforo === 'amarillo'
+                                            ? 'text-warning'
+                                            : ''
+                                    } ${
+                                        semaforo === 'rojo' ? 'text-error' : ''
+                                    } }`}
+                                    style={
+                                        {
+                                            '--value': `${progreso}`,
+                                        } as React.CSSProperties
+                                    }
+                                >
+                                    {Math.round(progreso)}%
+                                </div>
                             </div>
                         </div>
                         <div className="stats shadow mx-auto text-center">
