@@ -26,6 +26,7 @@ export default function Objetivos() {
   const [hsFin, setHsFin] = useState(0)
   const [minFin, setMinFin] = useState(0)
   const [objetivos, setObjetivos] = useState<any>([])
+  const [objetivosLoading, setObjetivosLoading] = useState<boolean>(false)
 
   useEffect(() => {
     const getObjetivos = async () => {
@@ -74,6 +75,7 @@ export default function Objetivos() {
     setHsFin(0)
     setMinInicio(0)
     setMinFin(0)
+    setObjetivosLoading(false)
   }
 
   const piezaNombre = (pieza: string): string => {
@@ -123,7 +125,7 @@ export default function Objetivos() {
       </div>
       <form
         className='px-12 py-12 bg-base-200 rounded-3xl shadow-md m-12 space-y-6 text-center'
-        onSubmit={handleSubmit}>
+        onSubmit={e => {handleSubmit(e);setObjetivosLoading(true)}}>
         <h2 className='text-center text-xl'>Agregar objetivo</h2>
 
         <div className='py-2'>
@@ -260,7 +262,7 @@ export default function Objetivos() {
         </div>
 
         <button type='submit' className='btn btn-primary mx-auto block'>
-          Guardar
+         {objetivosLoading ? <span className="loading loading-spinner loading-md"></span> : 'Guardar'} 
         </button>
       </form>
     </main>
