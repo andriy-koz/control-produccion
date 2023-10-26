@@ -182,7 +182,7 @@ export default function Objetivos() {
             id='cantidad-objetivo'
             min={1}
             max={300}
-            onChange={(e: any) => setCantObj(e.target.value)}
+            onChange={(e: any) => setCantObj(parseInt(e.target.value))}
             className='input input-bordered input-primary w-full max-w-xs'
           />
         </div>
@@ -196,7 +196,7 @@ export default function Objetivos() {
             id='cantidad-entrega'
             min={1}
             max={25}
-            onChange={(e: any) => setCantEntrega(e.target.value)}
+            onChange={(e: any) => setCantEntrega(parseInt(e.target.value))}
             className='input input-bordered input-primary w-full max-w-xs'
           />
         </div>
@@ -212,7 +212,7 @@ export default function Objetivos() {
               max={24}
               placeholder='hs'
               className='input input-bordered input-primary w-full max-w-xs'
-              onChange={(e: any) => setHsInicio(e.target.value)}
+              onChange={(e: any) => setHsInicio(parseInt(e.target.value))}
               value={hsInicio}
             />
             <span className='px-2 flex items-center'>:</span>
@@ -224,7 +224,7 @@ export default function Objetivos() {
               max={59}
               placeholder='mins'
               className='input input-bordered input-primary w-full max-w-xs'
-              onChange={(e: any) => setMinInicio(e.target.value)}
+              onChange={(e: any) => setMinInicio(parseInt(e.target.value))}
               value={minInicio}
             />
           </div>
@@ -241,7 +241,7 @@ export default function Objetivos() {
               max={48}
               placeholder='hs'
               className='input input-bordered input-primary w-full max-w-xs'
-              onChange={(e: any) => setHsFin(e.target.value)}
+              onChange={(e: any) => setHsFin(parseInt(e.target.value))}
               value={hsFin}
             />
             <span className='px-2 flex items-center'>:</span>
@@ -253,7 +253,7 @@ export default function Objetivos() {
               max={59}
               placeholder='mins'
               className='input input-bordered input-primary w-full max-w-xs'
-              onChange={(e: any) => setMinFin(e.target.value)}
+              onChange={(e: any) => setMinFin(parseInt(e.target.value))}
               value={minFin}
             />
           </div>
