@@ -1,9 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { signIn } from 'next-auth/react'
+import { signIn, signOut, useSession } from 'next-auth/react'
 
 export default function Navbar() {
+  const { data: session } = useSession()
+
   return (
     <div className='navbar bg-base-100'>
       <div className='navbar-start w-auto'>
@@ -54,9 +56,17 @@ export default function Navbar() {
           </li>
         </ul>
       </div>
-      <button className='btn btn-ghost ml-auto' onClick={() => signIn()}>
-        Entrar
-      </button>
+      {session ? (
+        <button
+          className='btn btn-ghost ml-auto'
+          onClick={() => signOut({ callbackUrl: '/' })}>
+          Salir
+        </button>
+      ) : (
+        <button className='btn btn-ghost ml-auto' onClick={() => signIn()}>
+          Entrar
+        </button>
+      )}
     </div>
   )
 }
