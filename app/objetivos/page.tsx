@@ -238,7 +238,7 @@ export default function Objetivos() {
               name='hora-fin'
               id='hora-fin'
               min={0}
-              max={24}
+              max={48}
               placeholder='hs'
               className='input input-bordered input-primary w-full max-w-xs'
               onChange={(e: any) => setHsFin(e.target.value)}

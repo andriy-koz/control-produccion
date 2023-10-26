@@ -33,8 +33,6 @@ export default function Entregas() {
     getObjetivos()
   }, [])
 
-  console.log(objetivos)
-
   const sumarEntregas = (modelo: string, pieza: string, id: any) => {
     let sum = 0
     entregas.forEach((entrega: any) => {
