@@ -1,13 +1,14 @@
 import { initializeApp } from 'firebase/app'
 import { getFirestore } from 'firebase/firestore'
+import { env } from 'process'
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCVyT9E8OAVoG9COXUYXBHhmp2bB2WKAfA',
-  authDomain: 'control-produccion-da559.firebaseapp.com',
-  projectId: 'control-produccion-da559',
-  storageBucket: 'control-produccion-da559.appspot.com',
-  messagingSenderId: '40740312485',
-  appId: '1:40740312485:web:220055f6ea0b5510b9844c',
+  apiKey: env.API_KEY,
+  authDomain: env.AUTH_DOMAIN,
+  projectId: env.PROJECT_ID,
+  storageBucket: env.STORAGE_BUCKET,
+  messagingSenderId: env.MESSAGING_SENDER_ID,
+  appId: env.APP_ID,
 }
 
 export const app = initializeApp(firebaseConfig)
