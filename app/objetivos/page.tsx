@@ -11,7 +11,7 @@ import {
   getDocs,
   deleteDoc,
 } from 'firebase/firestore'
-import { database } from '../../firebase'
+import { database } from '@/firebase'
 
 const modelos = ['a4', 'a5', 'a6']
 const piezas = ['fondo-canos', 'tapa-funda', 'terminado']
@@ -125,7 +125,10 @@ export default function Objetivos() {
       </div>
       <form
         className='px-12 py-12 bg-base-200 rounded-3xl shadow-md m-12 space-y-6 text-center'
-        onSubmit={e => {handleSubmit(e);setObjetivosLoading(true)}}>
+        onSubmit={e => {
+          handleSubmit(e)
+          setObjetivosLoading(true)
+        }}>
         <h2 className='text-center text-xl'>Agregar objetivo</h2>
 
         <div className='py-2'>
@@ -262,7 +265,11 @@ export default function Objetivos() {
         </div>
 
         <button type='submit' className='btn btn-primary mx-auto block'>
-         {objetivosLoading ? <span className="loading loading-spinner loading-md"></span> : 'Guardar'} 
+          {objetivosLoading ? (
+            <span className='loading loading-spinner loading-md'></span>
+          ) : (
+            'Guardar'
+          )}
         </button>
       </form>
     </main>
