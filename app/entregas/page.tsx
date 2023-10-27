@@ -82,11 +82,8 @@ export default function Entregas() {
                 </div>
 
                 <button type='submit' className='btn btn-primary flex-1'>
-                  {loading ? (
-                    <span className='loading loading-spinner loading-md'></span>
-                  ) : (
-                    'Entregar'
-                  )}
+                  'Entregar'
+                  
                 </button>
               </div>
               <progress
