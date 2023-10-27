@@ -8,9 +8,25 @@ import useGetData from '@/hooks/useGetData'
 import { sumarEntregas } from '@/utlis/sumarEntregas'
 
 export default function Entregas() {
-  const [entregas, objetivos, horaActual, minActual] = useGetData()
+  const [entregas, objetivos, horaActual, minActual, refetch] = useGetData()
+  const [loading, setLoading] = useState(false)
+  const [estadoEntregas, setEstadoEntregas] = useState<any>([])
 
-  // Manejar las entregas correspondientes a cada objetivo
+  const datosParaRenderizar = objetivos.map((objetivo: any) => {
+    const { total_entregas } = sumarEntregas(
+      entregas,
+      objetivo.modelo,
+      objetivo.pieza,
+      objetivo.id
+    )
+    const progreso = (total_entregas / objetivo.cantidad_objetivo) * 100
+    return {
+      ...objetivo,
+      total_entregas,
+      progreso,
+    }
+  })
+
   const handleEntrega = async (
     e: any,
     modelo: any,
@@ -37,24 +53,20 @@ export default function Entregas() {
 
     const docRef = doc(database, 'entregas', entrega.id)
     await setDoc(docRef, entrega)
+    refetch()
+    setLoading(false)
   }
 
   return (
     <div>
       {objetivos &&
-        objetivos.map((objetivo: any) => {
-          const { total_entregas } = sumarEntregas(
-            entregas,
-            objetivo.modelo,
-            objetivo.pieza,
-            objetivo.id
-          )
-          const progreso = (total_entregas / objetivo.cantidad_objetivo) * 100
+        datosParaRenderizar.map((objetivo: any) => {
           return (
             <form
-              onSubmit={e =>
+              onSubmit={e => {
                 handleEntrega(e, objetivo.modelo, objetivo.pieza, objetivo.id)
-              }
+                setLoading(true)
+              }}
               key={objetivo.id}
               className='px-8 py-4 my-4 bg-base-200'>
               <div className='flex items-center justify-center gap-6'>
@@ -68,16 +80,21 @@ export default function Entregas() {
                     className='input input-bordered input-primary w-full max-w-xs text-center'
                   />
                 </div>
+
                 <button type='submit' className='btn btn-primary flex-1'>
-                  Enviar
+                  {loading ? (
+                    <span className='loading loading-spinner loading-md'></span>
+                  ) : (
+                    'Entregar'
+                  )}
                 </button>
               </div>
               <progress
                 className='progress progress-success w-full mt-4'
-                value={progreso}
+                value={objetivo.progreso}
                 max='100'></progress>
               <p className='text-center text-sm'>
-                {total_entregas} / {objetivo.cantidad_objetivo}
+                {objetivo.total_entregas} / {objetivo.cantidad_objetivo}
               </p>
             </form>
           )
