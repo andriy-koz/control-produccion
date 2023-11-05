@@ -19,7 +19,7 @@ export default function Objetivos() {
 
   useEffect(() => {
     const getObjetivos = async () => {
-      await fetch('https://localhost:7021/api/objetivos')
+      await fetch('http://localhost:80/api/objetivos')
         .then(res => res.json())
         .then(data => {
           setObjetivos(data)
@@ -50,7 +50,7 @@ export default function Objetivos() {
       mes,
     }
 
-    await fetch('https://localhost:7021/api/objetivos', {
+    await fetch('http://localhost:80/api/objetivos', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ export default function Objetivos() {
   }
 
   const handleDelete = (id: string) => async () => {
-    await fetch(`https://localhost:7021/api/objetivos/${id}`, {
+    await fetch(`http://localhost:80/api/objetivos/${id}`, {
       method: 'DELETE',
     })
     setObjetivos(

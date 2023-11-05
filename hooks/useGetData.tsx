@@ -7,7 +7,7 @@ export default function useGetData() {
   const [minActual, setMinActual] = useState<any>(0)
 
   const getEntregas = async () => {
-    await fetch('https://localhost:7021/api/entregas')
+    await fetch('http://localhost:80/api/entregas')
       .then(res => res.json())
       .then(data => {
         setEntregas(data)
@@ -15,7 +15,7 @@ export default function useGetData() {
   }
 
   const getObjetivos = async () => {
-    await fetch('https://localhost:7021/api/objetivos')
+    await fetch('http://localhost:80/api/objetivos')
       .then(res => res.json())
       .then(data => {
         setObjetivos(data)
