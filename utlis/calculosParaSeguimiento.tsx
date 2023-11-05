@@ -12,32 +12,29 @@ export default function calculosParaSeguimiento(
     entregas,
     objetivo.modelo,
     objetivo.pieza,
-    objetivo.id
+    objetivo.objetivoId
   )
   const piezas_hora =
-    objetivo.cantidad_objetivo /
-    (objetivo.hora_fin +
-      objetivo.min_fin / 60 -
-      objetivo.hora_inicio -
-      objetivo.min_inicio / 60)
+    objetivo.cantidadObjetivo /
+    (objetivo.horaFin +
+      objetivo.minFin / 60 -
+      objetivo.horaInicio -
+      objetivo.minInicio / 60)
   const piezas_15mins = piezas_hora / 4
   const tiempo_transcurrido =
-    horaActual +
-    minActual / 60 -
-    objetivo.hora_inicio -
-    objetivo.min_inicio / 60
-  const tiempo_por_entrega = objetivo.cantidad_entrega / piezas_hora
+    horaActual + minActual / 60 - objetivo.horaInicio - objetivo.minInicio / 60
+  const tiempo_por_entrega = objetivo.cantidadEntrega / piezas_hora
   const piezas_estimadas = piezas_hora * tiempo_transcurrido
 
   if (
     piezas_estimadas - total_entregas <=
-    objetivo.cantidad_entrega + piezas_15mins
+    objetivo.cantidadEntrega + piezas_15mins
   ) {
     semaforo = 'verde'
   } else if (
     piezas_estimadas - total_entregas >
-      objetivo.cantidad_entrega + piezas_15mins &&
-    piezas_estimadas - total_entregas < objetivo.cantidad_entrega + piezas_hora
+      objetivo.cantidadEntrega + piezas_15mins &&
+    piezas_estimadas - total_entregas < objetivo.cantidadEntrega + piezas_hora
   ) {
     semaforo = 'amarillo'
   } else {
@@ -45,13 +42,13 @@ export default function calculosParaSeguimiento(
   }
 
   const estimado_proxima_entrega = convertirAHorasYMinutos(
-    Math.ceil(piezas_estimadas / objetivo.cantidad_entrega) *
+    Math.ceil(piezas_estimadas / objetivo.cantidadEntrega) *
       tiempo_por_entrega +
-      objetivo.hora_inicio +
-      objetivo.min_inicio / 60
+      objetivo.horaInicio +
+      objetivo.minInicio / 60
   )
 
-  const progreso = (total_entregas / objetivo.cantidad_objetivo) * 100
+  const progreso = (total_entregas / objetivo.cantidadObjetivo) * 100
 
   return {
     progreso,

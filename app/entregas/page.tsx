@@ -11,9 +11,9 @@ export default function Entregas() {
       entregas,
       objetivo.modelo,
       objetivo.pieza,
-      objetivo.id
+      objetivo.objetivoId
     )
-    const progreso = (total_entregas / objetivo.cantidad_objetivo) * 100
+    const progreso = (total_entregas / objetivo.cantidadObjetivo) * 100
     return {
       ...objetivo,
       total_entregas,
@@ -25,7 +25,7 @@ export default function Entregas() {
     e: any,
     modelo: any,
     pieza: any,
-    id_objetivo: any
+    objetivoId: any
   ) => {
     e.preventDefault()
 
@@ -42,10 +42,10 @@ export default function Entregas() {
       hora: hs,
       minuto: mins,
       entregaId: 0,
-      ObjetivoId: id_objetivo,
+      objetivoId,
     }
 
-    const res = await fetch('https://localhost:7021/api/entregas', {
+    await fetch('https://localhost:7021/api/entregas', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,9 +63,14 @@ export default function Entregas() {
           return (
             <form
               onSubmit={e => {
-                handleEntrega(e, objetivo.modelo, objetivo.pieza, objetivo.id)
+                handleEntrega(
+                  e,
+                  objetivo.modelo,
+                  objetivo.pieza,
+                  objetivo.objetivoId
+                )
               }}
-              key={objetivo.id}
+              key={objetivo.objetivoId}
               className='px-8 py-4 my-4 bg-base-200'>
               <div className='flex items-center justify-center gap-6'>
                 <div className='flex-1 text-center'>
@@ -74,13 +79,13 @@ export default function Entregas() {
                   <input
                     type='number'
                     name='cantidad_entrega'
-                    defaultValue={objetivo.cantidad_entrega}
+                    defaultValue={objetivo.cantidadEntrega}
                     className='input input-bordered input-primary w-full max-w-xs text-center'
                   />
                 </div>
 
                 <button type='submit' className='btn btn-primary flex-1'>
-                  'Entregar'
+                  Entregar
                 </button>
               </div>
               <progress
@@ -88,7 +93,7 @@ export default function Entregas() {
                 value={objetivo.progreso}
                 max='100'></progress>
               <p className='text-center text-sm'>
-                {objetivo.total_entregas} / {objetivo.cantidad_objetivo}
+                {objetivo.total_entregas} / {objetivo.cantidadObjetivo}
               </p>
             </form>
           )

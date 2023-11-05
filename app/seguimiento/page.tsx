@@ -21,7 +21,7 @@ export default function Seguimiento() {
 
         return (
           <div
-            key={objetivo.id}
+            key={objetivo.objetivoId}
             className='flex flex-col justify-center items-center bg-base-200 py-4 gap-2'>
             <h1 className='uppercase text-secondary text-xl'>
               {objetivo.modelo}
@@ -63,7 +63,7 @@ export default function Seguimiento() {
               </div>
               <div className='stat'>
                 <div className='stat-title'>Objetivo</div>
-                <div className='stat-value'>{objetivo.cantidad_objetivo}</div>
+                <div className='stat-value'>{objetivo.cantidadObjetivo}</div>
                 <div className='stat-desc'>
                   Próxima entrega a las {estimado_proxima_entrega}
                 </div>

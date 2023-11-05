@@ -13,9 +13,9 @@ export const sumarEntregas = (
     if (
       entrega.modelo === modelo &&
       entrega.pieza === pieza &&
-      entrega.id_objetivo === id
+      entrega.objetivoId === id
     ) {
-      sum += entrega.cantidad_entrega
+      sum += entrega.cantidadEntrega
       if (entrega.hora > hora) {
         hora = entrega.hora
         hora_ultima_entrega = convertirAHorasYMinutos(
