@@ -45,7 +45,7 @@ export default function Entregas() {
       objetivoId,
     }
 
-    await fetch('http://localhost:80/api/entregas', {
+    await fetch(process.env.API_URL + '/entregas', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
