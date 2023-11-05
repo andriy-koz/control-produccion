@@ -1,17 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid'
-
-import {
-  doc,
-  setDoc,
-  collection,
-  query,
-  getDocs,
-  deleteDoc,
-} from 'firebase/firestore'
-import { database } from '@/firebase'
 
 const modelos = ['a4', 'a5', 'a6']
 const piezas = ['fondo-canos', 'tapa-funda', 'terminado']
@@ -30,13 +19,11 @@ export default function Objetivos() {
 
   useEffect(() => {
     const getObjetivos = async () => {
-      const q = query(collection(database, 'objetivos'))
-      const querySnapshot = await getDocs(q)
-      const objetivos: any = []
-      querySnapshot.forEach((doc: any) => {
-        objetivos.push(doc.data())
-      })
-      setObjetivos(objetivos)
+      await fetch('https://localhost:7021/api/objetivos')
+        .then(res => res.json())
+        .then(data => {
+          setObjetivos(data)
+        })
     }
     getObjetivos()
   }, [])
@@ -49,13 +36,13 @@ export default function Objetivos() {
     const mes = fecha.getMonth()
 
     const docData = {
-      id: uuidv4(),
-      cantidad_entrega: cantEntrega,
-      cantidad_objetivo: cantObj,
-      hora_fin: hsFin,
-      hora_inicio: hsInicio,
-      min_fin: minFin,
-      min_inicio: minInicio,
+      objetivoId: 0,
+      cantidadEntrega: cantEntrega,
+      cantidadObjetivo: cantObj,
+      horaFin: hsFin,
+      horaInicio: hsInicio,
+      minFin: minFin,
+      minInicio: minInicio,
       modelo: modelo,
       pieza: pieza,
       sector: 'soldadura',
@@ -63,7 +50,13 @@ export default function Objetivos() {
       mes,
     }
 
-    await setDoc(doc(database, 'objetivos', docData.id), docData)
+    await fetch('https://localhost:7021/api/objetivos', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(docData),
+    })
 
     setObjetivos([...objetivos, docData])
 
@@ -89,8 +82,12 @@ export default function Objetivos() {
   }
 
   const handleDelete = (id: string) => async () => {
-    await deleteDoc(doc(database, 'objetivos', id))
-    setObjetivos(objetivos.filter((objetivo: any) => objetivo.id !== id))
+    await fetch(`https://localhost:7021/api/objetivos/${id}`, {
+      method: 'DELETE',
+    })
+    setObjetivos(
+      objetivos.filter((objetivo: any) => objetivo.objetivoId !== id)
+    )
   }
 
   return (
@@ -110,11 +107,11 @@ export default function Objetivos() {
                 <tr key={i}>
                   <td>{objetivo.modelo.toUpperCase()}</td>
                   <td>{piezaNombre(objetivo.pieza)}</td>
-                  <td>{objetivo.cantidad_objetivo}</td>
+                  <td>{objetivo.cantidadObjetivo}</td>
                   <td>
                     <button
                       className='btn btn-secondary btn-outline'
-                      onClick={handleDelete(objetivo.id)}>
+                      onClick={handleDelete(objetivo.objetivoId)}>
                       borrar
                     </button>
                   </td>

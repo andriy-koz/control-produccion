@@ -1,6 +1,4 @@
 import { useState, useEffect } from 'react'
-import { query, collection, getDocs } from 'firebase/firestore'
-import { database } from '../firebase'
 
 export default function useGetData() {
   const [objetivos, setObjetivos] = useState<any>([])
@@ -9,23 +7,19 @@ export default function useGetData() {
   const [minActual, setMinActual] = useState<any>(0)
 
   const getEntregas = async () => {
-    const q = query(collection(database, 'entregas'))
-    const querySnapshot = await getDocs(q)
-    const tempEntregas: any = []
-    querySnapshot.forEach((doc: any) => {
-      tempEntregas.push(doc.data())
-    })
-    setEntregas(tempEntregas)
+    await fetch('https://localhost:7021/api/entregas')
+      .then(res => res.json())
+      .then(data => {
+        setEntregas(data)
+      })
   }
 
   const getObjetivos = async () => {
-    const q = query(collection(database, 'objetivos'))
-    const querySnapshot = await getDocs(q)
-    const tempObjetivos: any = []
-    querySnapshot.forEach((doc: any) => {
-      tempObjetivos.push(doc.data())
-    })
-    setObjetivos(tempObjetivos)
+    await fetch('https://localhost:7021/api/objetivos')
+      .then(res => res.json())
+      .then(data => {
+        setObjetivos(data)
+      })
   }
 
   // Llama a las funciones de fetch en el useEffect para la carga inicial
