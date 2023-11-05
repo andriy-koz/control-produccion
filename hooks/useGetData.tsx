@@ -7,7 +7,7 @@ export default function useGetData() {
   const [minActual, setMinActual] = useState<any>(0)
 
   const getEntregas = async () => {
-    await fetch(process.env.API_URL + '/entregas')
+    await fetch(process.env.NEXT_PUBLIC_API_URL + '/entregas')
       .then(res => res.json())
       .then(data => {
         setEntregas(data)
@@ -15,7 +15,7 @@ export default function useGetData() {
   }
 
   const getObjetivos = async () => {
-    await fetch(process.env.API_URL + '/objetivos')
+    await fetch(process.env.NEXT_PUBLIC_API_URL + '/objetivos')
       .then(res => res.json())
       .then(data => {
         setObjetivos(data)
