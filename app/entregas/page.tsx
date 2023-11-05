@@ -80,7 +80,7 @@ export default function Entregas() {
                 </div>
 
                 <button type='submit' className='btn btn-primary flex-1'>
-                  Entregar
+                  'Entregar'
                 </button>
               </div>
               <progress
